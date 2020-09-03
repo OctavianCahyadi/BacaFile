@@ -1,8 +1,11 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 
 /**
@@ -13,36 +16,54 @@ import java.util.Scanner;
 public class BacaFile {
     
     public static void main(String[] args) throws IOException{
-        File folder = new File("C:\\Users\\user\\Documents\\BacaFileVsCode\\TestProjectFileName");
-        File[] listOfFiles = folder.listFiles();
-        String path = "D:/HasilRename/";
-        for (int a = 0; a < listOfFiles.length; a++) {
-            if (listOfFiles[a].isFile()) {
-                System.out.println(listOfFiles[a].getName());
-            } else if (listOfFiles[a].isDirectory()) {
-                System.out.println(listOfFiles[a].getName());
-            }
-        }
-        Scanner input = new Scanner(System.in);
-        System.out.print("Apakah anda akan merename semua File [1/0]:");
-        int inputan = input.nextInt();
-        System.out.print("Kode tambahan rename:");
-        String inputString = input.next();
-        input.close();
-        if (inputan == 1){
-            for (int i = 0; i < listOfFiles.length; i++) {
-                if (listOfFiles[i].isFile()) {
-                    Files.copy(listOfFiles[i].toPath(),
-                        (new File(path + listOfFiles[i].getName())).toPath(),
-                        StandardCopyOption.REPLACE_EXISTING);
+        // File folder = new File("C:\\Users\\user\\Documents\\BacaFileVsCode\\TestProjectFileName");
+        // File[] listOfFiles = folder.listFiles();
+        // String path = "C:/Users/user/Documents/BacaFileVsCode/TestProjectFileName";
+        // for (File listOfFile : listOfFiles) {
+        //     String str = listOfFile.getName();
+        //     System.out.println(str);
+        //     String[] arrOfStr = str.split("_", 2);
+        //     for (int i = 0; i < arrOfStr.length; i++) {
+        //         System.out.println(arrOfStr[i]);
+        //         if (arrOfStr[i].toLowerCase().startsWith("rm")) {
+        //             File f = new File("C:\\Users\\user\\Documents\\BacaFileVsCode\\TestProjectFileName\\" + listOfFile.getName());
+        //             f.renameTo(new File("C:\\Users\\user\\Documents\\BacaFileVsCode\\HasilRM\\" + listOfFiles[i].getName()));
+        //             System.out.println("masuk RM");
+        //         } else if (arrOfStr[i].toLowerCase().startsWith("reg")) {
+        //             File f = new File("C:\\Users\\user\\Documents\\BacaFileVsCode\\TestProjectFileName\\" + listOfFiles[i].getName());
+        //             f.renameTo(new File("C:\\Users\\user\\Documents\\BacaFileVsCode\\HasilREG\\" + listOfFiles[i].getName()));
+        //         }
+        //     }
+        // }
+        File directoryPath = new File("C:\\Users\\user\\Documents\\BacaFileVsCode\\TestProjectFileName\\");
+        File[] contents = directoryPath.listFiles();
+        String[] temp = null;
+        for (File file : contents) {
+            //StringTokenizer st = new StringTokenizer(file.getName(), "_");
+            // while (st.hasMoreElements()) {
+            // String token = st.nextToken();
+            if (file.getName().contains("REG")) {
+                String fromFile = "C:\\Users\\user\\Documents\\BacaFileVsCode\\TestProjectFileName\\" + file.getName();
+                String toFile = "C:\\Users\\user\\Documents\\BacaFileVsCode\\HasilREG\\" + file.getName();
 
-                    File f = new File("C:\\Users\\user\\Documents\\BacaFileVsCode\\HasilRename" + listOfFiles[i].getName());
-                    f.renameTo(new File("C:\\Users\\user\\Documents\\BacaFileVsCode\\HasilRename\\" + inputString+ "_" + listOfFiles[i].getName()));
-                }
+                Path source = Paths.get(fromFile);
+                Path target = Paths.get(toFile);
+                Files.move(source, target);
+                System.out.println(file.getName()+" Berhasil di pindahkan ke Folder HasilREG");
             }
-            System.out.println("Rename File Berhasil !!! ");
-        }else{
-            System.out.println("Rename tidak jadi dilakukan");
+            // }
+            else if (file.getName().contains("RM") || file.getName().contains("MR")) {
+                String fromFile = "C:\\Users\\user\\Documents\\BacaFileVsCode\\TestProjectFileName\\" + file.getName();
+                String toFile = "C:\\Users\\user\\Documents\\BacaFileVsCode\\HasilRM\\" + file.getName();
+
+                Path source = Paths.get(fromFile);
+                Path target = Paths.get(toFile);
+                Files.move(source, target);
+                System.out.println(file.getName()+" Berhasil di pindahkan ke Folder HasilRM");
+            }
+            else if (!file.getName().contains("RM") && !file.getName().contains("REG")) {
+                //System.out.println(file.getName());
+            }
         }
     }
 }
