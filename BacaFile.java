@@ -35,31 +35,26 @@ public class BacaFile {
         //         }
         //     }
         // }
+
         File directoryPath = new File("C:\\Users\\user\\Documents\\BacaFileVsCode\\TestProjectFileName\\");
         File[] contents = directoryPath.listFiles();
-        String[] temp = null;
         for (File file : contents) {
-            //StringTokenizer st = new StringTokenizer(file.getName(), "_");
-            // while (st.hasMoreElements()) {
-            // String token = st.nextToken();
             if (file.getName().contains("REG")) {
                 String fromFile = "C:\\Users\\user\\Documents\\BacaFileVsCode\\TestProjectFileName\\" + file.getName();
                 String toFile = "C:\\Users\\user\\Documents\\BacaFileVsCode\\HasilREG\\" + file.getName();
-
                 Path source = Paths.get(fromFile);
                 Path target = Paths.get(toFile);
                 Files.move(source, target);
-                System.out.println(file.getName()+" Berhasil di pindahkan ke Folder HasilREG");
+                System.out.println("file "+file.getName()+" Berhasil di pindahkan ke Folder HasilREG");
             }
             // }
             else if (file.getName().contains("RM") || file.getName().contains("MR")) {
                 String fromFile = "C:\\Users\\user\\Documents\\BacaFileVsCode\\TestProjectFileName\\" + file.getName();
                 String toFile = "C:\\Users\\user\\Documents\\BacaFileVsCode\\HasilRM\\" + file.getName();
-
                 Path source = Paths.get(fromFile);
                 Path target = Paths.get(toFile);
                 Files.move(source, target);
-                System.out.println(file.getName()+" Berhasil di pindahkan ke Folder HasilRM");
+                System.out.println("file "+file.getName()+" Berhasil di pindahkan ke Folder HasilRM");
             }
             else if (!file.getName().contains("RM") && !file.getName().contains("REG")) {
                 //System.out.println(file.getName());
